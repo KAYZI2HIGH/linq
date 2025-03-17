@@ -13,7 +13,6 @@ export default function FriendRequestRealtime() {
   const {
     friendRequests,
     friendRequestsInfo,
-    setFriendRequests
   } = useNotify();
   useEffect(() => {
     console.log('component rerenders', friendRequests)
@@ -41,7 +40,7 @@ export default function FriendRequestRealtime() {
       throw new Error(pendingFriendshipError?.message);
     }
     if (pendingFriendship) {
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from("friendships")
         .update({ status: "accepted" })
         .eq("sender_email", email)

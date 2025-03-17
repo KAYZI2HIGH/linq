@@ -1,18 +1,11 @@
 'use client'
-import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "./ui/sidebar";
+import { SidebarMenu, SidebarMenuButton } from "./ui/sidebar";
 import ProfileAvatar from "./Avatar";
 import Link from "next/link";
-import supabase, { supabaseAdmin } from "@/lib/supabaseClient";
 import { useNotify } from "@/contexts/FriendRequestContext";
-import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
 
 const ListFriends = () => {
-  const {data: session} = useSession()
-
   const { friendList } = useNotify()
-  
-  console.log(friendList)
   
   if (friendList && friendList.length === 0) {
     return <SidebarMenu className="px-3">No chats to display...</SidebarMenu>

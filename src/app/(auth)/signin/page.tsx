@@ -1,4 +1,3 @@
-
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -41,7 +40,7 @@ const LoginPage = async() => {
               
               <SignInWithGoogleBtn/>
               <div className="flex justify-center md:justify-start gap-4">
-                <p className="text-[#6B7280] text-xs">Don't have an account?</p>
+                <p className="text-[#6B7280] text-xs">Don&apos;t have an account?</p>
                 <Link
                   href={"/contact"}
                   className="text-black text-xs font-medium hover:underline"

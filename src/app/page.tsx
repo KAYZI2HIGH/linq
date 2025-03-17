@@ -21,7 +21,7 @@ const HomePage = () => {
             Chat Features Coming Soon
           </h1>
           <p className="text-base text-gray-600 max-w-md mx-auto leading-relaxed">
-            We're working hard to bring you a revolutionary chat experience
+            We&apos;re working hard to bring you a revolutionary chat experience
             without language barriers.
           </p>
         </div>

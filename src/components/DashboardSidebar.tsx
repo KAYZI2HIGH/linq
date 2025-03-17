@@ -17,7 +17,6 @@ import { auth } from "@/auth";
 import { notFound } from "next/navigation";
 import ProfileAvatar from "./Avatar";
 import LogoutBtn from "./LogoutBtn";
-import { useNotify } from "@/contexts/FriendRequestContext";
 import FriendRequestNumber from "./FriendRequestNumber";
 import ListFriends from "./ListFriends";
 import { ForwardRefExoticComponent, RefAttributes, Suspense } from "react";

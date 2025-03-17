@@ -64,12 +64,16 @@ const AddFriendForm = () => {
       )
       .eq("status", "pending");
     
+    if (pendingFriendshipError) {
+      throw new Error(pendingFriendshipError.message)
+    }
+    
     if (pendingFriendship && pendingFriendship.length > 0) {
       form.setError("email", { message: "Your request has been sent earlier, wait to be accepted." });
       return;
     }
 
-     const { data, error } = await supabase
+     const { error } = await supabase
        .from("friendships")
        .insert([
          { sender_email: user?.email, receiver_email: friendEmail, status: "pending" },

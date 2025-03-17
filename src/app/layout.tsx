@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import "./globals.css";
 import { Mulish } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
@@ -8,7 +7,7 @@ import { SessionProvider } from "next-auth/react";
 
 const mulish = Mulish({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"], // Normal, Medium, SemiBold, Bold, ExtraBold
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {

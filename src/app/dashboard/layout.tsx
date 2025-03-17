@@ -1,7 +1,5 @@
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { DashboardSidebar } from "@/components/DashboardSidebar";
-import { NotifyProvider } from "@/contexts/FriendRequestContext";
-import { SessionProvider } from "next-auth/react";
 
 export default function DashboardLayout({
   children,

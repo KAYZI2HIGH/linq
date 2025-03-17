@@ -1,16 +1,14 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { Mulish } from "next/font/google";
+import { Toaster } from "@/components/ui/sonner";
+import { NotifyProvider } from "@/contexts/FriendRequestContext";
+import { SessionProvider } from "next-auth/react";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+const mulish = Mulish({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"], // Normal, Medium, SemiBold, Bold, ExtraBold
 });
 
 export const metadata: Metadata = {
@@ -25,10 +23,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body className={`${mulish.className} antialiased`}>
+        <SessionProvider>
+          <NotifyProvider>
+            <Toaster position="top-center" />
+            {children}
+          </NotifyProvider>
+        </SessionProvider>
       </body>
     </html>
   );

@@ -13,3 +13,10 @@ interface FriendRequest {
   sender_email: string,
   receiver_email: string
 }
+
+interface Chat {
+  id: string;
+  created_at: string,
+  user1: string,
+  user2: string
+}

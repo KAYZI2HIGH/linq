@@ -20,6 +20,7 @@ import LogoutBtn from "./LogoutBtn";
 import FriendRequestNumber from "./FriendRequestNumber";
 import ListFriends from "./ListFriends";
 import { ForwardRefExoticComponent, RefAttributes, Suspense } from "react";
+import FriendListContainer from "./FriendListContainer";
 
 interface Item {
   title: string;
@@ -67,7 +68,7 @@ export async function DashboardSidebar() {
               <h1 className="text-[#111827] text-sm font-semibold capitalize truncate max-w-[140px] tracking-wider">
                 {session.user?.name}
               </h1>
-              <p className="text-[10px] text-[#111827] font-medium tracking-wider">Online</p>
+              <p className="text-[10px] text-[#111827] tracking-wider">Online</p>
             </div>
           </div>
           <div className="relative">
@@ -134,7 +135,7 @@ export async function DashboardSidebar() {
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <Suspense fallback={<p>Loading...</p>}>
-              <ListFriends/>
+              <FriendListContainer />
             </Suspense>
           </SidebarGroupContent>
         </SidebarGroup>

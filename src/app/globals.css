@@ -86,3 +86,6 @@
 .hide_scrollbar {
   scrollbar-width: none;
 }
+.small_scrollbar {
+  scrollbar-width: thin;
+}

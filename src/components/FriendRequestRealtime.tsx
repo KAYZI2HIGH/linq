@@ -10,13 +10,10 @@ import { useSession } from "next-auth/react";
 import { useNotify } from "@/contexts/FriendRequestContext";
 
 export default function FriendRequestRealtime() {
-  const {
-    friendRequests,
-    friendRequestsInfo,
-  } = useNotify();
+  const { friendRequests, friendRequestsInfo } = useNotify();
   useEffect(() => {
-    console.log('component rerenders', friendRequests)
-  }, [friendRequests])
+    console.log("component rerenders", friendRequests);
+  }, [friendRequests]);
   const [acceptLoading, setAcceptLoading] = useState(false);
   const [rejectLoading, setRejectLoading] = useState(false);
 
@@ -40,11 +37,20 @@ export default function FriendRequestRealtime() {
       throw new Error(pendingFriendshipError?.message);
     }
     if (pendingFriendship) {
+       const { error: createChatError } = await supabase
+         .from("chats")
+        .insert([{ user1: session?.user?.email, user2: email }]);
+      if (createChatError) {
+        toast.error("Error creating a chat");
+        throw new Error('error', createChatError)
+      }
       const { error } = await supabase
         .from("friendships")
         .update({ status: "accepted" })
         .eq("sender_email", email)
         .eq("receiver_email", session?.user?.email);
+
+     
 
       if (error) {
         setAcceptLoading(false);
@@ -95,8 +101,8 @@ export default function FriendRequestRealtime() {
     }
   };
 
-    console.log(friendRequests);
-    console.log(friendRequestsInfo);
+  console.log(friendRequests);
+  console.log(friendRequestsInfo);
 
   return (
     <>

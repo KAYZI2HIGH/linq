@@ -18,7 +18,10 @@ interface RequestContextType {
   setNotifyUser: Dispatch<SetStateAction<string>>;
   setFriendRequestsInfo: Dispatch<SetStateAction<FriendRequest[]>>;
   setFriendRequests: Dispatch<SetStateAction<User[]>>;
-  friendList: User[]
+  friendList: User[];
+  setFriendList: Dispatch<SetStateAction<User[]>>;
+  friendChat: Chat[];
+  setFriendChat:  Dispatch<SetStateAction<Chat[]>>
 }
 
 const notifyContext = createContext<RequestContextType | undefined>(undefined);
@@ -32,7 +35,8 @@ export const NotifyProvider = ({ children }: { children: React.ReactNode }) => {
   const [acceptedFriendRequests, setAcceptedFriendRequests] = useState<
     FriendRequest[]
   >([]);
-  const [friendList, setFriendList] = useState<User[]>([]);
+   const [friendChat, setFriendChat] = useState<Chat[]>([]);
+   const [friendList, setFriendList] = useState<User[]>([]);
   const { data: session } = useSession();
 
   useEffect(() => {
@@ -224,6 +228,62 @@ export const NotifyProvider = ({ children }: { children: React.ReactNode }) => {
     fetchUser();
   }, [friendRequestsInfo]);
 
+ 
+
+  useEffect(() => {
+    if (!session?.user?.email) return;
+
+    const channel = supabase
+      .channel("chats")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "chats" },
+        (payload) => {
+          console.log(payload.new);
+
+          setFriendChat((prev) => {
+            let updatedRequests = [...prev];
+
+            if (payload.eventType === "INSERT") {
+              updatedRequests.push(payload.new as Chat);
+              console.log("new user added");
+            }
+
+            return updatedRequests;
+          });
+        }
+      )
+      .subscribe();
+
+    return () => {
+      channel.unsubscribe();
+    };
+  }, [session?.user?.email]);
+
+  useEffect(() => {
+    const fetch = async () => {
+      const friends: User[] = await Promise.all(
+        friendChat.map(async (chat) => {
+          const friendEmail =
+            chat.user1 === session?.user?.email ? chat.user2 : chat.user1;
+          const { data: friend, error: friendError } = await supabaseAdmin
+            .schema("next_auth")
+            .from("users")
+            .select()
+            .eq("email", friendEmail)
+            .single();
+
+          if (friendError) {
+            throw new Error("Error fetching chats", friendError);
+          }
+          return friend;
+        })
+      );
+      setFriendList(friends);
+    };
+    fetch();
+  }, [friendChat]);
+
   useEffect(() => {
     console.log(friendRequests);
   }, [friendRequests]);
@@ -237,7 +297,10 @@ export const NotifyProvider = ({ children }: { children: React.ReactNode }) => {
         friendRequestsInfo,
         setFriendRequests,
         setFriendRequestsInfo,
-        friendList
+        friendList,
+        friendChat,
+        setFriendChat,
+        setFriendList
       }}
     >
       {children}

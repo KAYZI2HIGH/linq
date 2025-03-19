@@ -1,5 +1,4 @@
 import ChatInput from "@/components/chats/ChatInput";
-import ChatMessageBox from "@/components/chats/ChatMessageBox";
 import ChatMessageBoxContainer from "@/components/chats/ChatMessageBoxContainer";
 import ChatsHeader from "@/components/chats/ChatsHeader";
 import HeaderSkeleton from "@/components/skeleton/chatSkeletons/HeaderSkeleton";

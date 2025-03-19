@@ -1,6 +1,5 @@
 "use client";
 import { pusherClient } from "@/lib/pusher";
-import { useSession } from "next-auth/react";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 interface MessageContextType {
@@ -17,7 +16,6 @@ export const MessageContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { data: session } = useSession();
   const [messages, setMessages] = useState<Message[]>([]);
   const [chatId, setChatId] = useState("");
 

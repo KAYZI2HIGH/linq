@@ -20,6 +20,7 @@ if(messages.length === 0)  setMessages(initialMessages);
         messages.map((msg: Message) => {
           return (
             <div
+              key={msg.id}
               className={`flex flex-col gap-1 px-4 py-2 rounded-xl w-fit max-w-[70%] min-w-[150px] ${
                 session?.user?.email === msg.sender_email
                   ? "bg-[#111827] ml-auto text-white"

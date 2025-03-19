@@ -30,7 +30,7 @@ const ChatsHeader = async ({ chatId }: { chatId: string }) => {
     .eq("email", friendEmail)
     .single();
 
-  if (error) throw new Error("Error fetching friend Information", error);
+  if (friendInfoError) throw new Error("Error fetching friend Information", friendInfoError);
 
   if (!friendInfo) notFound();
 

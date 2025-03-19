@@ -1,14 +1,12 @@
 "use client";
-import { Loader2, PlusIcon, Send } from "lucide-react";
+import { PlusIcon, Send } from "lucide-react";
 import { Button } from "../ui/button";
-import { Textarea } from "../ui/textarea";
 import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
-  FormMessage,
 } from "../ui/form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,7 +16,6 @@ import { toast } from "sonner";
 import {nanoid} from 'nanoid'
 import { Input } from "../ui/input";
 import { useMessageContext } from "@/contexts/MessagesContext";
-import { useRef } from "react";
 
 const formSchema = z.object({
   message: z.string().min(1, "Message cannot be empty"),

@@ -1,7 +1,6 @@
 import { auth } from "@/auth";
 import ListFriends from "./ListFriends";
 import supabase, { supabaseAdmin } from "@/lib/supabaseClient";
-import { SidebarMenu } from "./ui/sidebar";
 
 const FriendListContainer = async ({className}: {className?: string}) => {
   const session = await auth();

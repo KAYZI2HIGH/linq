@@ -3,8 +3,7 @@ import { SidebarMenu, SidebarMenuButton } from "./ui/sidebar";
 import ProfileAvatar from "./Avatar";
 import Link from "next/link";
 import { useNotify } from "@/contexts/FriendRequestContext";
-import { useEffect, useState } from "react";
-import supabase, { supabaseAdmin } from "@/lib/supabaseClient";
+import { useEffect } from "react";
 import { useSession } from "next-auth/react";
 
 const ListFriends = ({
@@ -25,7 +24,7 @@ const ListFriends = ({
     }
     if(friendChat.length === 0)
     setFriendChat(initialChats);
-  }, []);
+  });
 
   if (friendList && friendList.length === 0) {
     return (

@@ -248,7 +248,7 @@ export const NotifyProvider = ({ children }: { children: React.ReactNode }) => {
           console.log(payload.new);
 
           setFriendChat((prev) => {
-            let updatedRequests = [...prev];
+            const updatedRequests = [...prev];
 
             if (payload.eventType === "INSERT") {
               updatedRequests.push(payload.new as Chat);

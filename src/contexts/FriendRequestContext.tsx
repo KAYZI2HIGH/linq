@@ -40,6 +40,12 @@ export const NotifyProvider = ({ children }: { children: React.ReactNode }) => {
   const { data: session } = useSession();
 
   useEffect(() => {
+    setTimeout(() => {
+      setNotifyUser('')
+    }, 2000);
+  }, [notifyUser])
+
+  useEffect(() => {
     const fetch = async () => {
       const { data: request, error: requestError } = await supabase
         .from("friendships")

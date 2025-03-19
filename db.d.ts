@@ -20,3 +20,12 @@ interface Chat {
   user1: string,
   user2: string
 }
+
+interface Message {
+  id: string,
+  chat_id?: string,
+  sender_email: string,
+  receiver_email: string,
+  content: string,
+  created_at: string
+}

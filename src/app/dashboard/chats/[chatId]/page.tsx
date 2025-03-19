@@ -1,5 +1,6 @@
 import ChatInput from "@/components/chats/ChatInput";
 import ChatMessageBox from "@/components/chats/ChatMessageBox";
+import ChatMessageBoxContainer from "@/components/chats/ChatMessageBoxContainer";
 import ChatsHeader from "@/components/chats/ChatsHeader";
 import HeaderSkeleton from "@/components/skeleton/chatSkeletons/HeaderSkeleton";
 import MessageSkeleton from "@/components/skeleton/chatSkeletons/MessageSkeleton";
@@ -13,7 +14,7 @@ const FriendChat = async ({ params }: { params: { chatId: string } }) => {
         <ChatsHeader chatId={chatId} />
       </Suspense>
       <Suspense fallback={<MessageSkeleton />}>
-        <ChatMessageBox chatId={chatId} />
+        <ChatMessageBoxContainer chatId={chatId} />
       </Suspense>
       <ChatInput chatId={chatId} />
     </section>

@@ -4,6 +4,7 @@ import { Mulish } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { NotifyProvider } from "@/contexts/FriendRequestContext";
 import { SessionProvider } from "next-auth/react";
+import { MessageContextProvider } from "@/contexts/MessagesContext";
 
 const mulish = Mulish({
   subsets: ["latin"],
@@ -24,10 +25,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${mulish.className} antialiased`}>
         <SessionProvider>
-          <NotifyProvider>
-            <Toaster position="top-center" />
-            {children}
-          </NotifyProvider>
+          <MessageContextProvider>
+            <NotifyProvider>
+              <Toaster position="top-center" />
+              {children}
+            </NotifyProvider>
+          </MessageContextProvider>
         </SessionProvider>
       </body>
     </html>

@@ -65,11 +65,14 @@ const ChatInput = ({ chatId }: { chatId: string }) => {
 
       setMessages(prev => [...prev, messageContent])
 
-      const res = await fetch("/api/messages/send", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ chatId, messageContent }),
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/messages/send`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ chatId, messageContent }),
+        }
+      );
 
       console.log(res)
 

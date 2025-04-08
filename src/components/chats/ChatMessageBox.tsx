@@ -9,18 +9,15 @@ const ChatMessageBox = ({initialMessages, chatId }: {initialMessages:Message[], 
   const { data: session } = useSession();
   const { messages, setMessages, setChatId } = useMessageContext()
   setChatId(chatId)
-  
-  useEffect(() => {
-if(messages.length === 0)  setMessages(initialMessages);
-  })
+    setMessages(initialMessages);
   
   return (
     <section className="flex-1 flex flex-col overflow-y-scroll p-4 gap-4 w-full hide_scrollbar">
       {messages &&
-        messages.map((msg: Message) => {
+        messages.map((msg: Message, index) => {
           return (
             <div
-              key={msg.id}
+              key={index}
               className={`flex flex-col gap-1 px-4 py-2 rounded-xl w-fit max-w-[70%] min-w-[150px] ${
                 session?.user?.email === msg.sender_email
                   ? "bg-[#111827] ml-auto text-white"

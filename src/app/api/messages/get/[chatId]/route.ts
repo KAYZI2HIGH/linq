@@ -41,7 +41,19 @@ export async function GET(req: Request,
       );
     }
 
-    return NextResponse.json({ messages, source: "supabase" }, { status: 200 });
+    return NextResponse.json(
+      { messages, source: "supabase" },
+      {
+        status: 200,
+        headers: {
+          "Cache-Control":
+            "no-store, no-cache, must-revalidate, proxy-revalidate",
+          Pragma: "no-cache",
+          Expires: "0",
+          "Surrogate-Control": "no-store",
+        },
+      }
+    );
   } catch (error) {
     console.error("Error processing request:", error);
     return NextResponse.json({ error: "Server error" }, { status: 500 });

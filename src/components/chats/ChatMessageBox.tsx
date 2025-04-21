@@ -9,7 +9,10 @@ const ChatMessageBox = ({initialMessages, chatId }: {initialMessages:Message[], 
   const { data: session } = useSession();
   const { messages, setMessages, setChatId } = useMessageContext()
   setChatId(chatId)
-    setMessages(initialMessages);
+  useEffect(() => {
+    if(messages.length === 0) setMessages(initialMessages);
+
+  })
   
   return (
     <section className="flex-1 flex flex-col overflow-y-scroll p-4 gap-4 w-full hide_scrollbar">

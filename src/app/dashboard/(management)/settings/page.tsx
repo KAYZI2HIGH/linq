@@ -1,9 +1,16 @@
-import React from 'react'
+import LanguagePreference from "@/components/LanguagePreference";
+import NotificationSettings from "@/components/NotificationsSettings";
+import ProfileSettings from "@/components/ProfileSettings";
 
-const page = () => {
+
+  const SettingsPage = () => {
   return (
-    <div className="text-3xl">Page</div>
-  )
+    <>
+      <LanguagePreference />
+      <NotificationSettings />
+      <ProfileSettings/>
+    </>
+  );
 }
 
-export default page
+export default SettingsPage

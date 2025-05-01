@@ -54,7 +54,7 @@ export async function DashboardSidebar() {
     notFound();
   }
   return (
-    <Sidebar className="shadow-sm border-0">
+    <Sidebar  className="shadow-sm border-0 ">
       <SidebarHeader className="bg-white border-b border-black/10">
         <div className=" px-2 w-full pt-[16px] flex justify-between items-center">
           <div className="flex gap-[12px]">

@@ -46,6 +46,9 @@ export const NotifyProvider = ({ children }: { children: React.ReactNode }) => {
   }, [notifyUser])
 
   useEffect(() => {
+    if (!session) {
+      return;
+    }
     const fetch = async () => {
       const { data: request, error: requestError } = await supabase
         .from("friendships")
@@ -103,6 +106,9 @@ export const NotifyProvider = ({ children }: { children: React.ReactNode }) => {
   }, [session]);
 
   useEffect(() => {
+    if (!session) {
+      return;
+    }
     const updateFriend = async () => {
       const friendDetails: User[] = await Promise.all(
         acceptedFriendRequests
@@ -145,10 +151,18 @@ export const NotifyProvider = ({ children }: { children: React.ReactNode }) => {
     } else if (notifyUser === "requestDenied") {
       toast.warning("Your request was declined.");
     }
+
+    const timer = setTimeout(() => {
+      setNotifyUser('')
+    }, 1000);
+
+    return () => {
+      clearTimeout(timer)
+    }
   }, [notifyUser]);
 
   useEffect(() => {
-    if (!session?.user?.email) return;
+    if (!session) return;
 
     const channel = supabase
       .channel("friend_requests")
@@ -202,6 +216,7 @@ export const NotifyProvider = ({ children }: { children: React.ReactNode }) => {
   }, [session?.user?.email]);
 
   useEffect(() => {
+    if(!session) return;
     const fetchUser = async () => {
       if (friendRequestsInfo.length > 0) {
         try {
@@ -237,7 +252,7 @@ export const NotifyProvider = ({ children }: { children: React.ReactNode }) => {
  
 
   useEffect(() => {
-    if (!session?.user?.email) return;
+    if (!session) return;
 
     const channel = supabase
       .channel("chats")
@@ -267,6 +282,7 @@ export const NotifyProvider = ({ children }: { children: React.ReactNode }) => {
   }, [session?.user?.email]);
 
   useEffect(() => {
+    if(!session) return;
     const fetch = async () => {
       const friends: User[] = await Promise.all(
         friendChat.map(async (chat) => {

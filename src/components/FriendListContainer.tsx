@@ -32,7 +32,6 @@ const FriendListContainer = async ({className}: {className?: string}) => {
       return friend;
     })
   );
-  console.log(friends);
   return (
     <ListFriends
       initialFriends={friends}

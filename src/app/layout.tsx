@@ -5,6 +5,8 @@ import { Toaster } from "@/components/ui/sonner";
 import { NotifyProvider } from "@/contexts/FriendRequestContext";
 import { SessionProvider } from "next-auth/react";
 import { MessageContextProvider } from "@/contexts/MessagesContext";
+import QueryProvider from "@/components/provider/QueryProvider";
+import { DashboardContextProvider } from "@/contexts/DashboardContext";
 
 const mulish = Mulish({
   subsets: ["latin"],
@@ -27,8 +29,10 @@ export default function RootLayout({
         <SessionProvider>
           <MessageContextProvider>
             <NotifyProvider>
-              <Toaster position="top-center" />
-              {children}
+              <DashboardContextProvider>
+                <Toaster position="top-center" />
+                <QueryProvider>{children}</QueryProvider>
+              </DashboardContextProvider>
             </NotifyProvider>
           </MessageContextProvider>
         </SessionProvider>

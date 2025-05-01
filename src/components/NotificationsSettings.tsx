@@ -1,14 +1,22 @@
-'use client'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Bell, Globe, Loader2 } from 'lucide-react';
-import React from 'react'
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
-import { z } from 'zod';
-import { Checkbox } from './ui/checkbox';
-import { Switch } from './ui/switch';
-
+"use client";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Bell, Globe, Loader2 } from "lucide-react";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
+import { Switch } from "./ui/switch";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { GetUserSettings, UpdateSettings } from "@/lib/actions";
+import { Session } from "next-auth";
 
 const FormSchema = z.object({
   messages: z.boolean().default(false).optional(),
@@ -16,7 +24,9 @@ const FormSchema = z.object({
   update: z.boolean(),
 });
 
-const NotificationSettings = () => {
+const NotificationSettings = ({ session, data }: { session: Session | null, data: UserSettings | null }) => {
+  const { id: userId } = session?.user || {};
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -25,6 +35,12 @@ const NotificationSettings = () => {
       update: false,
     },
   });
+
+ 
+  const { mutate } = useMutation({
+    mutationFn: UpdateSettings,
+  });
+
   function onSubmit(data: z.infer<typeof FormSchema>) {
     toast("You submitted the following values:", {
       description: (
@@ -34,6 +50,7 @@ const NotificationSettings = () => {
       ),
     });
   }
+
 
   return (
     <Form {...form}>
@@ -51,12 +68,31 @@ const NotificationSettings = () => {
           render={({ field }) => (
             <FormItem className="flex items-center justify-between px-1">
               <div className="space-y-0.5">
-                <FormLabel className='font-normal'>Messages</FormLabel>
+                <FormLabel className="font-normal">Messages</FormLabel>
               </div>
               <FormControl>
                 <Switch
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
+                  defaultChecked={data?.notify_messages}
+                  onCheckedChange={(field) => {
+                    if (!userId) return toast.error("User not found");
+                    mutate(
+                      {
+                        userId,
+                        setting: "notify_messages",
+                        UpdateSettings: field,
+                      },
+                      {
+                        onSuccess: () => {
+                          toast.success(
+                            "Notification settings updated successfully"
+                          );
+                        },
+                        onError: (error) => {
+                          toast.error(error.message);
+                        },
+                      }
+                    );
+                  }}
                 />
               </FormControl>
             </FormItem>
@@ -68,12 +104,31 @@ const NotificationSettings = () => {
           render={({ field }) => (
             <FormItem className="flex items-center justify-between px-1">
               <div className="space-y-0.5">
-                <FormLabel className='font-normal'>Friend Requests</FormLabel>
+                <FormLabel className="font-normal">Friend Requests</FormLabel>
               </div>
               <FormControl>
                 <Switch
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
+                  defaultChecked={data?.notify_friend_requests}
+                  onCheckedChange={(field) => {
+                    if (!userId) return toast.error("User not found");
+                    mutate(
+                      {
+                        userId,
+                        setting: "notify_friend_requests",
+                        UpdateSettings: field,
+                      },
+                      {
+                        onSuccess: () => {
+                          toast.success(
+                            "Notification settings updated successfully"
+                          );
+                        },
+                        onError: (error) => {
+                          toast.error(error.message);
+                        },
+                      }
+                    );
+                  }}
                 />
               </FormControl>
             </FormItem>
@@ -85,12 +140,31 @@ const NotificationSettings = () => {
           render={({ field }) => (
             <FormItem className="flex items-center justify-between px-1">
               <div className="space-y-0.5">
-                <FormLabel className='font-normal'>Updates</FormLabel>
+                <FormLabel className="font-normal">Updates</FormLabel>
               </div>
               <FormControl>
                 <Switch
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
+                  defaultChecked={data?.notify_updates}
+                  onCheckedChange={(field) => {
+                    if (!userId) return toast.error("User not found");
+                    mutate(
+                      {
+                        userId,
+                        setting: "notify_updates",
+                        UpdateSettings: field,
+                      },
+                      {
+                        onSuccess: () => {
+                          toast.success(
+                            "Notification settings updated successfully"
+                          );
+                        },
+                        onError: (error) => {
+                          toast.error(error.message);
+                        },
+                      }
+                    );
+                  }}
                 />
               </FormControl>
             </FormItem>

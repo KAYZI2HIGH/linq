@@ -9,8 +9,7 @@ export default function DashboardLayout({
   return (
     <SidebarProvider>
       <DashboardSidebar />
-      <main className="bg-[#F9FAFB] w-full">{children}
-      </main>
+      <main className="bg-[#F9FAFB] w-full ">{children}</main>
     </SidebarProvider>
   );
 }

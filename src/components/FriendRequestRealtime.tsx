@@ -11,9 +11,6 @@ import { useNotify } from "@/contexts/FriendRequestContext";
 
 export default function FriendRequestRealtime() {
   const { friendRequests, friendRequestsInfo } = useNotify();
-  useEffect(() => {
-    console.log("component rerenders", friendRequests);
-  }, [friendRequests]);
   const [acceptLoading, setAcceptLoading] = useState(false);
   const [rejectLoading, setRejectLoading] = useState(false);
 

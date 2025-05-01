@@ -1,16 +1,17 @@
-import LanguagePreference from "@/components/LanguagePreference";
-import NotificationSettings from "@/components/NotificationsSettings";
-import ProfileSettings from "@/components/ProfileSettings";
+import Loading from "@/app/loading";
+import { DashboardSidebar } from "@/components/DashboardSidebar";
+import SettingsContent from "@/components/SettingsContent";
+import { Suspense } from "react";
 
-
-  const SettingsPage = () => {
+const SettingsPage = () => {
   return (
     <>
-      <LanguagePreference />
-      <NotificationSettings />
-      <ProfileSettings/>
+        <Suspense
+          fallback={<Loading />}
+          children={<SettingsContent />}
+        />
     </>
   );
-}
+};
 
-export default SettingsPage
+export default SettingsPage;

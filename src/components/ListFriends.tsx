@@ -11,7 +11,7 @@ const ListFriends = ({
   initialChats,
   className,
 }: {
-  initialFriends: User[];
+  initialFriends: UserSettings[];
   initialChats: Chat[];
   className?: string;
   }) => {
@@ -60,11 +60,11 @@ const ListFriends = ({
                 >
                   <ProfileAvatar
                     image={friend.image}
-                    name={friend.name}
+                    name={friend.display_name}
                   />
                   <div>
                     <h1 className="text-[#111827] text-sm font-medium truncate max-w-[160px]">
-                      {friend.name}
+                      {friend.display_name}
                     </h1>
                     <p className="text-xs truncate text-[#6B7280] max-w-[160px]">
                       Hey, how are you?

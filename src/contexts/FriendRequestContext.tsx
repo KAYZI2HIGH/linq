@@ -18,8 +18,8 @@ interface RequestContextType {
   setNotifyUser: Dispatch<SetStateAction<string>>;
   setFriendRequestsInfo: Dispatch<SetStateAction<FriendRequest[]>>;
   setFriendRequests: Dispatch<SetStateAction<User[]>>;
-  friendList: User[];
-  setFriendList: Dispatch<SetStateAction<User[]>>;
+  friendList: UserSettings[];
+  setFriendList: Dispatch<SetStateAction<UserSettings[]>>;
   friendChat: Chat[];
   setFriendChat:  Dispatch<SetStateAction<Chat[]>>
 }
@@ -36,7 +36,7 @@ export const NotifyProvider = ({ children }: { children: React.ReactNode }) => {
     FriendRequest[]
   >([]);
    const [friendChat, setFriendChat] = useState<Chat[]>([]);
-   const [friendList, setFriendList] = useState<User[]>([]);
+   const [friendList, setFriendList] = useState<UserSettings[]>([]);
   const { data: session } = useSession();
 
   useEffect(() => {
@@ -110,7 +110,7 @@ export const NotifyProvider = ({ children }: { children: React.ReactNode }) => {
       return;
     }
     const updateFriend = async () => {
-      const friendDetails: User[] = await Promise.all(
+      const friendDetails: UserSettings[] = await Promise.all(
         acceptedFriendRequests
           .filter(
             (friend) =>
@@ -123,9 +123,8 @@ export const NotifyProvider = ({ children }: { children: React.ReactNode }) => {
                 ? friend.sender_email
                 : friend.receiver_email;
 
-            const { data, error } = await supabaseAdmin
-              .schema("next_auth")
-              .from("users")
+            const { data, error } = await supabase
+              .from("user_settings")
               .select()
               .eq("email", email)
               .single();
@@ -284,13 +283,12 @@ export const NotifyProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     if(!session) return;
     const fetch = async () => {
-      const friends: User[] = await Promise.all(
+      const friends: UserSettings[] = await Promise.all(
         friendChat.map(async (chat) => {
           const friendEmail =
             chat.user1 === session?.user?.email ? chat.user2 : chat.user1;
-          const { data: friend, error: friendError } = await supabaseAdmin
-            .schema("next_auth")
-            .from("users")
+          const { data: friend, error: friendError } = await supabase
+            .from("user_settings")
             .select()
             .eq("email", friendEmail)
             .single();

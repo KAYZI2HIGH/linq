@@ -1,4 +1,4 @@
-import { Bell, LucideProps, MessageSquare, PlusIcon, Settings2, Users } from "lucide-react";
+import { Bell, PlusIcon  } from "lucide-react";
 
 import {
   Sidebar,
@@ -18,34 +18,11 @@ import { notFound } from "next/navigation";
 import ProfileAvatar from "./Avatar";
 import LogoutBtn from "./LogoutBtn";
 import FriendRequestNumber from "./FriendRequestNumber";
-import { ForwardRefExoticComponent, RefAttributes, Suspense } from "react";
+import { Suspense } from "react";
 import FriendListContainer from "./FriendListContainer";
-
-interface Item {
-  title: string;
-  url: string;
-  icon: ForwardRefExoticComponent<
-    Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
-  >;
-}
+import { items } from "@/lib/constant";
   
-const items: Item[] = [
-  {
-    title: "Chats",
-    url: "/dashboard/chats",
-    icon: MessageSquare,
-  },
-  {
-    title: "Friends",
-    url: "/dashboard/friends",
-    icon: Users,
-  },
-  {
-    title: "Settings",
-    url: "/dashboard/settings",
-    icon: Settings2,
-  },
-];
+
 
 export async function DashboardSidebar() {
   const session = await auth();

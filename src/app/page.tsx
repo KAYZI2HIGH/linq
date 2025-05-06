@@ -3,6 +3,8 @@ import { MessageCircleIcon, Clock4Icon, Workflow } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+
+
 const HomePage = () => {
   return (
     <div className="min-h-screen w-full bg-white flex flex-col items-center justify-center p-4 py-10 md:py-4">

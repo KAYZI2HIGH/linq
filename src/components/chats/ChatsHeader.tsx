@@ -3,9 +3,9 @@ import React from "react";
 import ProfileAvatar from "../Avatar";
 import { EllipsisVertical, Phone, Video } from "lucide-react";
 import { Button } from "../ui/button";
-import { SidebarTrigger } from "../ui/sidebar";
-import supabase, { supabaseAdmin } from "@/lib/supabaseClient";
+import supabase from "@/lib/supabaseClient";
 import { notFound } from "next/navigation";
+import BackButton from "../BackButton";
 
 const ChatsHeader = async ({ chatId }: { chatId: string }) => {
   const session = await auth();
@@ -23,9 +23,8 @@ const ChatsHeader = async ({ chatId }: { chatId: string }) => {
   const friendEmail =
     chat.user1 === session?.user?.email ? chat.user2 : chat.user1;
 
-  const { data: friendInfo, error: friendInfoError } = await supabaseAdmin
-    .schema("next_auth")
-    .from("users")
+  const { data: friendInfo, error: friendInfoError } = await supabase
+    .from("user_settings")
     .select()
     .eq("email", friendEmail)
     .single();
@@ -37,16 +36,16 @@ const ChatsHeader = async ({ chatId }: { chatId: string }) => {
   return (
     <section className="p-4 flex justify-between items-center border-b">
       <div className="flex gap-3 justify-center items-center">
-        <SidebarTrigger />
+        <BackButton/>
         <ProfileAvatar
           image={friendInfo?.image || ""}
-          name={friendInfo?.name || ""}
+          name={friendInfo?.display_name || ""}
         />
         <div className="space-y-[2px]">
           <h1 className="text-[#111827] font-medium tracking-wide text-xs capitalize">
-            {friendInfo?.name}
+            {friendInfo?.display_name}
           </h1>
-          <p className="text-[#6B7280] text-[10px] capitalize ">offline</p>
+          <p className="text-[#6B7280] text-[10px] capitalize ">online</p>
         </div>
       </div>
       <div className="flex">

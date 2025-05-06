@@ -7,5 +7,5 @@ interface UserSettings {
   notify_updates: boolean;
   display_name: string;
   email: string;
-  image: string | null;
+  image: string;
 }

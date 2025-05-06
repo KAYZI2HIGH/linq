@@ -1,3 +1,23 @@
+import { MessageSquare, Settings2, Users } from "lucide-react";
+
+export const items = [
+  {
+    title: "Chats",
+    url: "/dashboard/chats",
+    icon: MessageSquare,
+  },
+  {
+    title: "Friends",
+    url: "/dashboard/friends",
+    icon: Users,
+  },
+  {
+    title: "Settings",
+    url: "/dashboard/settings",
+    icon: Settings2,
+  },
+];
+
 export const SUPPORTEDLANGUAGE = [
   { code: "en", name: "English" },
   { code: "yo", name: "Yoruba" },

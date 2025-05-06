@@ -1,5 +1,6 @@
 "use server";
 
+import { auth } from "@/auth";
 import supabase from "./supabaseClient";
 
 export const UpdateSettings = async ({ userId, setting, UpdateSettings }: {
@@ -52,3 +53,37 @@ export const GetUserSettings = (userId: string | null) => {
       return data;
     });
 }
+
+export const GetFriendList = async () => {
+  const session = await auth();
+  if (!session) {
+    throw new Error("User not authenticated");
+  }
+  const { data: chats, error } = await supabase
+    .from("chats")
+    .select()
+    .or(`user1.eq.${session?.user?.email},user2.eq.${session?.user?.email}`);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  const friends: UserSettings[] = await Promise.all(
+    chats.map(async (chat) => {
+      const friendEmail =
+        chat.user1 === session?.user?.email ? chat.user2 : chat.user1;
+      const { data: friend, error: friendError } = await supabase
+        .from("user_settings")
+        .select()
+        .eq("email", friendEmail)
+        .single();
+
+      if (friendError) {
+        throw new Error("Error fetching chats", friendError);
+      }
+      return friend;
+    })
+  );
+
+  return {friends, chats};
+ }

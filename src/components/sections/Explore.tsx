@@ -20,7 +20,7 @@ const Explore = () => {
         .
       </p>
       <p className="text-gray-600 text-lg sm:text-xl">
-        Don't forget to give it a star{" "}
+        Don&apos;t forget to give it a star{" "}
         <span
           role="img"
           aria-label="star"

@@ -1,7 +1,6 @@
 import ChatInput from "@/components/chats/ChatInput";
 import ChatMessageBoxContainer from "@/components/chats/ChatMessageBoxContainer";
 import ChatsHeader from "@/components/chats/ChatsHeader";
-import { DashboardSidebar } from "@/components/DashboardSidebar";
 import HeaderSkeleton from "@/components/skeleton/chatSkeletons/HeaderSkeleton";
 import MessageSkeleton from "@/components/skeleton/chatSkeletons/MessageSkeleton";
 import { Suspense } from "react";

@@ -22,11 +22,9 @@ import { toast } from "sonner";
 import { z } from "zod";
 import { SUPPORTEDLANGUAGE } from "@/lib/constant";
 import { Checkbox } from "./ui/checkbox";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { GetUserSettings, UpdateSettings } from "@/lib/actions";
-import { useSession } from "next-auth/react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {  UpdateSettings } from "@/lib/actions";
 import { Session } from "next-auth";
-import HashLoader from "react-spinners/HashLoader";
 
 const FormSchema = z.object({
   language: z.string({

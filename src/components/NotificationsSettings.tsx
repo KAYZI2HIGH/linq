@@ -5,17 +5,16 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Bell, Globe, Loader2 } from "lucide-react";
+import { Bell } from "lucide-react";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import { Switch } from "./ui/switch";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { GetUserSettings, UpdateSettings } from "@/lib/actions";
+import { useMutation } from "@tanstack/react-query";
+import {  UpdateSettings } from "@/lib/actions";
 import { Session } from "next-auth";
 
 const FormSchema = z.object({
@@ -24,7 +23,13 @@ const FormSchema = z.object({
   update: z.boolean(),
 });
 
-const NotificationSettings = ({ session, data }: { session: Session | null, data: UserSettings | null }) => {
+const NotificationSettings = ({
+  session,
+  data,
+}: {
+  session: Session | null;
+  data: UserSettings | null;
+}) => {
   const { id: userId } = session?.user || {};
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -36,7 +41,6 @@ const NotificationSettings = ({ session, data }: { session: Session | null, data
     },
   });
 
- 
   const { mutate } = useMutation({
     mutationFn: UpdateSettings,
   });
@@ -51,7 +55,6 @@ const NotificationSettings = ({ session, data }: { session: Session | null, data
     });
   }
 
-
   return (
     <Form {...form}>
       <form
@@ -65,7 +68,7 @@ const NotificationSettings = ({ session, data }: { session: Session | null, data
         <FormField
           control={form.control}
           name="messages"
-          render={({ field }) => (
+          render={({ }) => (
             <FormItem className="flex items-center justify-between px-1">
               <div className="space-y-0.5">
                 <FormLabel className="font-normal">Messages</FormLabel>
@@ -101,7 +104,7 @@ const NotificationSettings = ({ session, data }: { session: Session | null, data
         <FormField
           control={form.control}
           name="friendRequest"
-          render={({ field }) => (
+          render={({ }) => (
             <FormItem className="flex items-center justify-between px-1">
               <div className="space-y-0.5">
                 <FormLabel className="font-normal">Friend Requests</FormLabel>

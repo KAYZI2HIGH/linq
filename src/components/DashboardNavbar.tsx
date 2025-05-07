@@ -1,5 +1,4 @@
 import React from 'react'
-import { SidebarTrigger } from './ui/sidebar'
 
 const DashboardNavbar = ({ text }: {text: string}) => {
   return (

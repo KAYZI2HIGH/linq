@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import ProfileAvatar from "./Avatar";
 import { Button } from "./ui/button";
 import { Check, Loader2, X } from "lucide-react";

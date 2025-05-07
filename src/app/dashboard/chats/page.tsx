@@ -1,5 +1,4 @@
 import React from "react";
-import { MessageCircleIcon, Clock4Icon, Workflow } from "lucide-react";
 import Image from "next/image";
 import DashboardFloatingDock from "@/components/DashboardFloatingDock";
 import { GetFriendList } from "@/lib/actions";

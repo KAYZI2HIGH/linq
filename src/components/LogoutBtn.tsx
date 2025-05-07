@@ -3,7 +3,7 @@ import { signOut } from 'next-auth/react';
 import { Button } from './ui/button';
 import { LogOut } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import React, { ReactElement } from 'react';
+import React from 'react';
 
 const LogoutBtn = ({className}: {className: string}) => {
   return (

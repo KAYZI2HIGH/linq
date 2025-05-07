@@ -32,7 +32,7 @@ const Hero = () => {
       <div className="flex-1 flex flex-col gap-3 lg:gap-5 min-w-fit z-20">
         <div className="flex gap-3 max-lg:mx-auto">
           <div className="rounded-full px-[14px] py-[2px] bg-gray-100 tracking-wide font-semibold text-[12px]">
-            What's new
+            What&apos;s new
           </div>
           <div className="flex gap-[2px] text-[12px] text-gray-500 items-center">
             Just shipped v1.0 <ChevronRight size={14} />

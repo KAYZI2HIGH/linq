@@ -1,6 +1,4 @@
-import { features } from "@/lib/constant";
 import React from "react";
-import { Card, CardDescription, CardTitle } from "../Card";
 import { HoverEffect } from "../ui/card-hover-effect";
 
 const Features = () => {
@@ -11,7 +9,7 @@ const Features = () => {
           Features
         </h2>
         <p className="text-[14px] md:text-lg max-w-[700px] w-full mx-auto md:font-medium font-light text-gray-600 text-center">
-          Linq tests Next.js 14's full potential—blending AI translation,
+          Linq tests Next.js 14&apos;s full potential—blending AI translation,
           real-time chats, and secure auth in one seamless experience.
         </p>
        

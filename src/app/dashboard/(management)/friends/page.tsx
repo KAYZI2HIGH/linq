@@ -1,5 +1,4 @@
 import AddFriendForm from "@/components/AddFriendForm";
-import { DashboardSidebar } from "@/components/DashboardSidebar";
 import FriendRequestList from "@/components/FriendRequestList";
 import FriendRequestSkeleton from "@/components/skeleton/FriendRequestSkeleton";
 import { Suspense } from "react";

@@ -4,7 +4,7 @@ import DashboardNavbar from "@/components/DashboardNavbar";
 import { usePathname } from "next/navigation";
 import React from "react";
 
-const layout = ({ children }: { children: React.ReactNode }) => {
+const Layout = ({ children }: { children: React.ReactNode }) => {
   const pathName = usePathname()
   return (
     <section className="flex flex-col h-dvh">
@@ -15,4 +15,4 @@ const layout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default layout;
+export default Layout;

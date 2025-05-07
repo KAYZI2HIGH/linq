@@ -34,7 +34,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/contexts/FriendRequestContext.tss"
-  ],
+, "src/app/api/messages/get/[chatId]/route.js", "src/app/api/messages/send/route.js"  ],
   "exclude": [
     "node_modules"
   ]

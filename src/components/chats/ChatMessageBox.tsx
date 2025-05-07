@@ -1,46 +1,55 @@
-'use client'
+"use client";
 import { formatTimestamp } from "@/utils/FormatTimeStamps";
 import AutoScroll from "./AutoScroll";
-import {  useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useMessageContext } from "@/contexts/MessagesContext";
 import { useEffect } from "react";
 import Image from "next/image";
 
-const ChatMessageBox = ({initialMessages, chatId }: {initialMessages:Message[], chatId: string }) => {
+const ChatMessageBox = ({
+  initialMessages,
+  chatId,
+}: {
+  initialMessages: Message[];
+  chatId: string;
+}) => {
   const { data: session } = useSession();
-  const { messages, setMessages, setChatId } = useMessageContext()
-  setChatId(chatId)
+  const { messages, setMessages, setChatId } = useMessageContext();
   useEffect(() => {
-    if(messages.length === 0) setMessages(initialMessages);
-
-  })
+    setChatId(chatId);
+    setMessages([])
+  }, [chatId, setChatId]);
+  useEffect(() => {
+    if (messages.length === 0) setMessages(initialMessages);
+  });
 
   if (messages.length === 0) {
     return (
-     <section className="flex flex-col h-dvh">
-             <div className="w-full bg-white flex flex-col items-center justify-center p-5 py-10 lg:py-4 flex-1 grow overflow-y-scroll">
-               <div className="max-w-2xl w-full text-center space-y-10">
-                 <Image
-                   src="/logo.png"
-                   alt="Logo"
-                   height={70}
-                   width={70}
-                   className="h-12 mx-auto mb-6"
-                 />
-                 <div className="space-y-4">
-                   <h1 className="text-2xl md:text-3xl font-semibold text-gray-900 tracking-wide">
-                      No Messages Found
-                   </h1>
-                   <p className="text-base text-gray-600 max-w-md mx-auto leading-relaxed">
-                      You can start a conversation with your friends by sending them a message.
-                   </p>
-                 </div>
-               </div>
-             </div>
-           </section>
+      <section className="flex flex-col h-dvh">
+        <div className="w-full bg-white flex flex-col items-center justify-center p-5 py-10 lg:py-4 flex-1 grow overflow-y-scroll">
+          <div className="max-w-2xl w-full text-center space-y-10">
+            <Image
+              src="/logo.png"
+              alt="Logo"
+              height={70}
+              width={70}
+              className="h-12 mx-auto mb-6"
+            />
+            <div className="space-y-4">
+              <h1 className="text-2xl md:text-3xl font-semibold text-gray-900 tracking-wide">
+                No Messages Found
+              </h1>
+              <p className="text-base text-gray-600 max-w-md mx-auto leading-relaxed">
+                You can start a conversation with your friends by sending them a
+                message.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
     );
   }
-  
+
   return (
     <section className="flex-1 flex flex-col overflow-y-scroll p-4 gap-4 w-full hide_scrollbar">
       {messages &&

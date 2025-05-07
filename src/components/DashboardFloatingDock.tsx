@@ -1,7 +1,5 @@
-import React from "react";
 import { Button } from "./ui/button";
 import { items } from "@/lib/constant";
-import { LogOut } from "lucide-react";
 import Link from "next/link";
 import LogoutBtn from "./LogoutBtn";
 

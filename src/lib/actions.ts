@@ -40,7 +40,7 @@ export const UpdateSettings = async ({ userId, setting, UpdateSettings }: {
 };
 
 
-export const GetUserSettings = (userId: string | null) => {
+export const GetUserSettings = async (userId: string | null) => {
   return supabase
     .from("user_settings")
     .select()

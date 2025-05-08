@@ -5,7 +5,7 @@ import { LogOut } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import React from 'react';
 
-const LogoutBtn = ({className}: {className: string}) => {
+const LogoutBtn = ({className}: {className?: string}) => {
   return (
     <Button
       onClick={() => {

@@ -15,9 +15,10 @@ const ChatMessageBox = ({
 }) => {
   const { data: session } = useSession();
   const { messages, setMessages, setChatId } = useMessageContext();
+
   useEffect(() => {
     setChatId(chatId);
-    setMessages([])
+    setMessages([]);
   }, [chatId, setChatId]);
   useEffect(() => {
     if (messages.length === 0) setMessages(initialMessages);

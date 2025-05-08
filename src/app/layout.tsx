@@ -27,14 +27,16 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${mulish.className} antialiased`}>
         <SessionProvider>
-          <MessageContextProvider>
-            <NotifyProvider>
-              <DashboardContextProvider>
-                <Toaster position="top-center" />
-                <QueryProvider>{children}</QueryProvider>
-              </DashboardContextProvider>
-            </NotifyProvider>
-          </MessageContextProvider>
+          <QueryProvider>
+            <MessageContextProvider>
+              <NotifyProvider>
+                <DashboardContextProvider>
+                  <Toaster position="top-center" />
+                  {children}
+                </DashboardContextProvider>
+              </NotifyProvider>
+            </MessageContextProvider>
+          </QueryProvider>
         </SessionProvider>
       </body>
     </html>

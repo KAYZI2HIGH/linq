@@ -40,18 +40,14 @@ export const UpdateSettings = async ({ userId, setting, UpdateSettings }: {
 };
 
 
-export const GetUserSettings = async (userId: string | null) => {
-  return supabase
+export const GetUserSettings = async (userId: string | null): Promise<UserSettings> => {
+  const {data} = await supabase
     .from("user_settings")
     .select()
     .eq("id", userId)
     .single()
-    .then(({ data, error }) => {
-      if (error) {
-        throw new Error(error.message);
-      }
-      return data;
-    });
+  
+  return data
 }
 
 export const GetFriendList = async () => {

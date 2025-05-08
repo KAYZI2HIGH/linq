@@ -27,5 +27,6 @@ interface Message {
   sender_email: string,
   receiver_email: string,
   content: string,
-  created_at: string
+  created_at: string,
+  isTranslated?: boolean
 }

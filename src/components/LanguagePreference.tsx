@@ -23,7 +23,7 @@ import { z } from "zod";
 import { SUPPORTEDLANGUAGE } from "@/lib/constant";
 import { Checkbox } from "./ui/checkbox";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import {  UpdateSettings } from "@/lib/actions";
+import { UpdateSettings } from "@/lib/actions";
 import { Session } from "next-auth";
 
 const FormSchema = z.object({
@@ -32,15 +32,21 @@ const FormSchema = z.object({
   }),
 });
 
-const LanguagePreference = ({ session, data }: {
-  session: Session | null, data: UserSettings | null }) => {
+const LanguagePreference = ({
+  session,
+  data,
+}: {
+  session: Session | null;
+  data: UserSettings | null;
+  }) => {
+  
+  
   const queryClient = useQueryClient();
 
-  
   const { mutate } = useMutation({
     mutationFn: UpdateSettings,
   });
-  
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -48,7 +54,7 @@ const LanguagePreference = ({ session, data }: {
     },
   });
 
-  function onSubmit(data: string) {
+  async function onSubmit (data: string) {
     const { id: userId } = session?.user || {};
     if (!userId) return toast.error("User not found");
     const language = data;
@@ -59,7 +65,6 @@ const LanguagePreference = ({ session, data }: {
         onSuccess: () => {
           toast.success("Language preference updated successfully");
           queryClient.invalidateQueries({ queryKey: ["user_settings"] });
-         
         },
         onError: (error) => {
           toast.error(error.message);
@@ -67,7 +72,6 @@ const LanguagePreference = ({ session, data }: {
       }
     );
   }
-
 
   return (
     <section className="p-6 bg-white rounded-[8px] shadow-sm">
@@ -99,7 +103,7 @@ const LanguagePreference = ({ session, data }: {
                     {SUPPORTEDLANGUAGE.map((language) => (
                       <SelectItem
                         key={language.code}
-                        value={language.code}
+                        value={language.name}
                       >
                         {language.name}
                       </SelectItem>

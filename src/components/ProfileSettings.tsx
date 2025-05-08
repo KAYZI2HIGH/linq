@@ -9,7 +9,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {  User } from "lucide-react";
+import { User } from "lucide-react";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -34,7 +34,9 @@ const ProfileSettings = ({
 }: {
   session: Session | null;
   data: UserSettings | null;
-}) => {
+  }) => {
+  
+  
   const { mutate } = useMutation({
     mutationFn: UpdateSettings,
   });
@@ -63,20 +65,16 @@ const ProfileSettings = ({
       return;
     }
 
-    mutate(
-      {
-        userId,
-        setting: "display_name",
-        UpdateSettings: name,
-      },
-    );
-    mutate(
-      {
-        userId,
-        setting: "email",
-        UpdateSettings: email,
-      },
-    );
+    mutate({
+      userId,
+      setting: "display_name",
+      UpdateSettings: name,
+    });
+    mutate({
+      userId,
+      setting: "email",
+      UpdateSettings: email,
+    });
     queryClient.invalidateQueries({ queryKey: ["user_settings"] });
     toast.success("Profile updated successfully!");
   }

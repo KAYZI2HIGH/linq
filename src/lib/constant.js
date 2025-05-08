@@ -29,7 +29,7 @@ export const SUPPORTEDLANGUAGE = [
   { code: "fr", name: "French" },
   { code: "es", name: "Spanish" },
   { code: "de", name: "German" },
-  { code: "zh", name: "Chinese (Simplified)" },
+  { code: "zh", name: "Chinese" },
   { code: "ar", name: "Arabic" },
   { code: "pt", name: "Portuguese" },
   { code: "ru", name: "Russian" },

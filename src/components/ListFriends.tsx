@@ -67,7 +67,7 @@ const ListFriends = ({
                       {friend.display_name}
                     </h1>
                     <p className="text-xs truncate text-[#6B7280] max-w-[160px]">
-                      Hey, how are you?
+                     {friend.email}
                     </p>
                   </div>
                 </Link>

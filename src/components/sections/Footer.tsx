@@ -4,7 +4,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="w-full bg-white px-6 py-4 flex items-center justify-between rounded-b-xl border-t">
+    <footer className="w-full bg-white px-6 py-4 flex flex-col md:flex-row gap-4 md:gap-0 items-center justify-between rounded-b-xl border-t">
       <div className="flex items-center gap-2">
         <Image
           src="/logo.png"

@@ -74,12 +74,12 @@ const LanguagePreference = ({
   }
 
   return (
-    <section className="p-6 bg-white rounded-[8px] shadow-sm">
+    <section className="mt-3">
       <Form {...form}>
         <form className="flex flex-col gap-4">
           <div className="flex gap-2 items-center ">
-            <Globe className="h-6 w-6 text-blue-500" />
-            <h2 className="text-xl font-semibold">Language Preference</h2>
+            <Globe className="h-5 w-5 text-blue-500" />
+            <h2 className="text-lg font-semibold">Language Preference</h2>
           </div>
           <FormField
             control={form.control}

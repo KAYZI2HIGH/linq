@@ -59,16 +59,16 @@ const NotificationSettings = ({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="p-6 flex flex-col gap-4 bg-white rounded-[8px] shadow-sm"
+        className="mt-8 space-y-3"
       >
-        <div className="flex gap-2 items-center ">
-          <Bell className="h-6 w-6 text-blue-500" />
-          <h2 className="text-xl font-semibold">Notifications</h2>
+        <div className="flex gap-2 items-center mb-3">
+          <Bell className="h-5 w-5 text-blue-500" />
+          <h2 className="text-lg font-semibold">Notifications</h2>
         </div>
         <FormField
           control={form.control}
           name="messages"
-          render={({ }) => (
+          render={({}) => (
             <FormItem className="flex items-center justify-between px-1">
               <div className="space-y-0.5">
                 <FormLabel className="font-normal">Messages</FormLabel>
@@ -104,7 +104,7 @@ const NotificationSettings = ({
         <FormField
           control={form.control}
           name="friendRequest"
-          render={({ }) => (
+          render={({}) => (
             <FormItem className="flex items-center justify-between px-1">
               <div className="space-y-0.5">
                 <FormLabel className="font-normal">Friend Requests</FormLabel>

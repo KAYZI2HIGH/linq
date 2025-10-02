@@ -4,11 +4,9 @@ import { Suspense } from "react";
 
 const SettingsPage = () => {
   return (
-    <>
-      <Suspense fallback={<Loading />}>
-        <SettingsContent />
-      </Suspense>
-    </>
+        <Suspense fallback={<Loading />}>
+          <SettingsContent />
+        </Suspense>
   );
 };
 

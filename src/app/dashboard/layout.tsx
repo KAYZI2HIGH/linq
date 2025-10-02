@@ -1,17 +1,17 @@
+import SideBar from "@/components/custom-ui/Sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
-import { DashboardSidebar } from "@/components/DashboardSidebar";
+import { ReactNode } from "react";
 
-export default function DashboardLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+interface UserLayoutProps {
+  children: ReactNode;
+}
+
+export default function DashboardLayout({ children }: UserLayoutProps) {
   return (
     <SidebarProvider>
-      <DashboardSidebar />
-      <main className="bg-[#F9FAFB] w-full ">
-        {children}
-      </main>
+      <SideBar>
+        <div className="w-full">{children}</div>
+      </SideBar>
     </SidebarProvider>
   );
 }

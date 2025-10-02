@@ -103,7 +103,7 @@ export default function FriendRequestRealtime() {
 
   return (
     <>
-      <h1 className="text-[#1F2937] text-sm font-medium">
+      <h1 className="text-[#1F2937] text-sm font-medium mb-2">
         Friend Request({friendRequests.length})
       </h1>
       <div className="flex flex-col gap-2">
@@ -126,7 +126,7 @@ export default function FriendRequestRealtime() {
                     <h1 className="text-[#1F2937] text-sm font-medium capitalize max-w-[120px] truncate">
                       {fr?.name}
                     </h1>
-                    <p className="text-[#6B7280] text-xs max-w-[160px] truncate">
+                    <p className="text-[#6B7280] text-xs max-w-[120px] truncate">
                       {fr?.email}
                     </p>
                   </div>

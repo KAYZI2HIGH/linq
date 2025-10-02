@@ -5,6 +5,7 @@ import ProfileSettings from "./ProfileSettings";
 import { auth } from "@/auth";
 import { toast } from "sonner";
 import { GetUserSettings } from "@/lib/actions";
+import { ScrollArea } from "./ui/scroll-area";
 
 const SettingsContent = async () => {
   const session = await auth();
@@ -13,7 +14,7 @@ const SettingsContent = async () => {
   const data = await GetUserSettings(userId);
 
   return (
-    <>
+    <div>
       <LanguagePreference
         session={session}
         data={data}
@@ -26,7 +27,7 @@ const SettingsContent = async () => {
         session={session}
         data={data}
       />
-    </>
+    </div>
   );
 };
 

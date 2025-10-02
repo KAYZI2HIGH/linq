@@ -88,11 +88,11 @@ const ProfileSettings = ({
             form.handleSubmit(onSubmit)();
           }
         }}
-        className="p-6 flex flex-col gap-4 bg-white rounded-[8px] shadow-sm"
+        className="mt-8 space-y-3"
       >
         <div className="flex gap-2 items-center ">
-          <User className="h-6 w-6 text-blue-500" />
-          <h2 className="text-xl font-semibold">Profile</h2>
+          <User className="h-5 w-5 text-blue-500" />
+          <h2 className="text-md font-semibold">Profile</h2>
         </div>
         <FormField
           control={form.control}

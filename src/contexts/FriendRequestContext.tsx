@@ -1,5 +1,6 @@
 "use client";
 import supabase, { supabaseAdmin } from "@/lib/supabaseClient";
+import { useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import {
   useState,
@@ -21,12 +22,13 @@ interface RequestContextType {
   friendList: UserSettings[];
   setFriendList: Dispatch<SetStateAction<UserSettings[]>>;
   friendChat: Chat[];
-  setFriendChat:  Dispatch<SetStateAction<Chat[]>>
+  setFriendChat: Dispatch<SetStateAction<Chat[]>>;
 }
 
 const notifyContext = createContext<RequestContextType | undefined>(undefined);
 
 export const NotifyProvider = ({ children }: { children: React.ReactNode }) => {
+  const queryClient = useQueryClient();
   const [notifyUser, setNotifyUser] = useState("");
   const [friendRequestsInfo, setFriendRequestsInfo] = useState<FriendRequest[]>(
     []
@@ -35,15 +37,15 @@ export const NotifyProvider = ({ children }: { children: React.ReactNode }) => {
   const [acceptedFriendRequests, setAcceptedFriendRequests] = useState<
     FriendRequest[]
   >([]);
-   const [friendChat, setFriendChat] = useState<Chat[]>([]);
-   const [friendList, setFriendList] = useState<UserSettings[]>([]);
+  const [friendChat, setFriendChat] = useState<Chat[]>([]);
+  const [friendList, setFriendList] = useState<UserSettings[]>([]);
   const { data: session } = useSession();
 
   useEffect(() => {
     setTimeout(() => {
-      setNotifyUser('')
+      setNotifyUser("");
     }, 2000);
-  }, [notifyUser])
+  }, [notifyUser]);
 
   useEffect(() => {
     if (!session) {
@@ -152,12 +154,12 @@ export const NotifyProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     const timer = setTimeout(() => {
-      setNotifyUser('')
+      setNotifyUser("");
     }, 1000);
 
     return () => {
-      clearTimeout(timer)
-    }
+      clearTimeout(timer);
+    };
   }, [notifyUser]);
 
   useEffect(() => {
@@ -183,12 +185,15 @@ export const NotifyProvider = ({ children }: { children: React.ReactNode }) => {
             }
 
             if (payload.eventType === "UPDATE") {
-            setAcceptedFriendRequests((prev) => [...prev, payload.new as FriendRequest]
-            );
+              setAcceptedFriendRequests((prev) => [
+                ...prev,
+                payload.new as FriendRequest,
+              ]);
               updatedRequests = updatedRequests.map((req) =>
                 req.id === payload.new.id ? { ...req, ...payload.new } : req
               );
               if (payload.new.sender_email === session?.user?.email) {
+                queryClient.invalidateQueries({ queryKey: ["friends"] });
                 setNotifyUser("requestAccepted");
               }
             }
@@ -199,6 +204,7 @@ export const NotifyProvider = ({ children }: { children: React.ReactNode }) => {
               );
               if (payload.old.sender_email === session?.user?.email) {
                 setNotifyUser("requestDenied");
+                queryClient.invalidateQueries({ queryKey: ["friends"] });
               }
             }
 
@@ -215,7 +221,7 @@ export const NotifyProvider = ({ children }: { children: React.ReactNode }) => {
   }, [session?.user?.email]);
 
   useEffect(() => {
-    if(!session) return;
+    if (!session) return;
     const fetchUser = async () => {
       if (friendRequestsInfo.length > 0) {
         try {
@@ -248,8 +254,6 @@ export const NotifyProvider = ({ children }: { children: React.ReactNode }) => {
     fetchUser();
   }, [friendRequestsInfo]);
 
- 
-
   useEffect(() => {
     if (!session) return;
 
@@ -281,7 +285,7 @@ export const NotifyProvider = ({ children }: { children: React.ReactNode }) => {
   }, [session?.user?.email]);
 
   useEffect(() => {
-    if(!session) return;
+    if (!session) return;
     const fetch = async () => {
       const friends: UserSettings[] = await Promise.all(
         friendChat.map(async (chat) => {
@@ -320,7 +324,7 @@ export const NotifyProvider = ({ children }: { children: React.ReactNode }) => {
         friendList,
         friendChat,
         setFriendChat,
-        setFriendList
+        setFriendList,
       }}
     >
       {children}

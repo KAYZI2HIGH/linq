@@ -1,51 +1,59 @@
+"use client";
+
 import React from "react";
 import ChatMessageBox from "./ChatMessageBox";
-import { GetUserSettings } from "@/lib/actions";
-import { auth } from "@/auth";
-import { translateText } from "@/lib/translate";
+import { useQuery } from "@tanstack/react-query";
+import MessageSkeleton from "../skeleton/chatSkeletons/MessageSkeleton";
+import { getProcessedMessages } from "@/lib/actions";
 
-const ChatMessageBoxContainer = async ({ chatId }: { chatId: string }) => {
+const ChatMessageBoxContainer = ({ chatId }: { chatId: string }) => {
+  const {
+    data: processedMessages,
+    error,
+    isLoading,
+  } = useQuery({
+    queryKey: ["processedMessages", chatId],
+    queryFn: () => getProcessedMessages(chatId),
+    enabled: !!chatId,
+  });
 
-  const messagesRes = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/messages/get/${chatId}`,
-    { cache: "no-store" }
-  );
-  const { messages } = await messagesRes.json()
-
-  const session = await auth();
-  const settings = await GetUserSettings(session?.user?.id || null);
-
-  let processedMessages = [...messages];
-
-  if (settings?.auto_translate && settings.default_language) {
-    const foreignMessages = messages.filter(
-      (msg: Message) => msg.isTranslated !== true
+  // Loading state
+  if (isLoading) {
+    return (
+      <MessageSkeleton />
     );
+  }
 
-    const messagesToTranslate = foreignMessages.slice(-10);
-
-    const translatedMessages = await Promise.all(
-      messagesToTranslate.map(async (msg:Message) => {
-        try {
-          return {
-            ...msg,
-            content: await translateText(
-              msg.content,
-              settings.default_language
-            ),
-            isTranslated: true,
-          };
-        } catch (error) {
-          console.error(`Translation failed for message ${msg.id}`);
-          return msg;
-        }
-      })
+  // Error state
+  if (error) {
+    return (
+      <section className="flex flex-col h-dvh">
+        <div className="w-full bg-white flex flex-col items-center justify-center p-5 py-10 lg:py-4 flex-1 grow overflow-y-scroll">
+          <div className="text-center space-y-2">
+            <p className="text-red-500 font-medium">Something went wrong</p>
+            <p className="text-gray-500 text-sm">
+              Failed to load messages. Please try again.
+            </p>
+          </div>
+        </div>
+      </section>
     );
+  }
 
-    processedMessages = messages.map((msg: Message) => {
-      const translatedMsg = translatedMessages.find((m) => m.id === msg.id);
-      return translatedMsg || msg;
-    });
+  // Empty state
+  if (!processedMessages || processedMessages.length === 0) {
+    return (
+      <section className="flex flex-col h-dvh">
+        <div className="w-full bg-white flex flex-col items-center justify-center p-5 py-10 lg:py-4 flex-1 grow overflow-y-scroll">
+          <div className="text-center space-y-2">
+            <p className="text-gray-500">No messages yet</p>
+            <p className="text-gray-400 text-sm">
+              Start a conversation by sending a message
+            </p>
+          </div>
+        </div>
+      </section>
+    );
   }
 
   return (

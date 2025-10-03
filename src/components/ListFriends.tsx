@@ -44,8 +44,6 @@ const ListFriends = ({
              (chat.user1 === friend.email &&
                chat.user2 === session?.user?.email)
           );
-
-          console.log(chat)
           
           return (
             <SidebarMenuButton

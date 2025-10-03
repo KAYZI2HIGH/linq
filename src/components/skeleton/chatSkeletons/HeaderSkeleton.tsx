@@ -1,3 +1,4 @@
+import BackButton from '@/components/BackButton'
 import { Button } from '@/components/ui/button'
 import { SidebarTrigger } from '@/components/ui/sidebar'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -8,7 +9,7 @@ const HeaderSkeleton = () => {
   return (
      <section className="p-4 flex justify-between items-center border-b">
           <div className="flex gap-3 justify-center items-center">
-            <SidebarTrigger/>
+            <BackButton/>
         <Skeleton
           className='size-[40px] rounded-full'
             />

@@ -1,11 +1,12 @@
 import { LucideProps } from "lucide-react";
 import { ForwardRefExoticComponent, RefAttributes } from "react";
 import LogoutButton from "./LogoutButton";
-import Link from "next/link";
+import { TabsTrigger } from "@/components/ui/tabs";
 import { buttonVariants } from "../ui/button";
+import { cn } from "@/lib/utils";
 
 interface DesktopItemProps {
-  href: string;
+  value: string;
   label: string;
   icon: ForwardRefExoticComponent<
     Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
@@ -13,7 +14,12 @@ interface DesktopItemProps {
   active?: boolean;
 }
 
-const DesktopItem = ({ href, label, icon: Icon, active }: DesktopItemProps) => {
+const DesktopItem = ({
+  value,
+  label,
+  icon: Icon,
+  active,
+}: DesktopItemProps) => {
   return (
     <li>
       {label === "Logout" ? (
@@ -24,19 +30,22 @@ const DesktopItem = ({ href, label, icon: Icon, active }: DesktopItemProps) => {
           />
         </LogoutButton>
       ) : (
-        <Link
-          href={href}
-          className={buttonVariants({
-            size: "icon",
-            variant: active ? "default" : "outline",
-          })}
+        <TabsTrigger
+          value={value}
+          className={cn(
+            buttonVariants({
+              size: "icon",
+              variant: "outline",
+            }),
+            "data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+          )}
         >
           <Icon
             className="w-5 h-5"
             strokeWidth={1.6}
           />
           <span className="sr-only">{label}</span>
-        </Link>
+        </TabsTrigger>
       )}
     </li>
   );

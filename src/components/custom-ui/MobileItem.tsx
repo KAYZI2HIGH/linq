@@ -2,13 +2,13 @@
 
 import { LucideProps } from "lucide-react";
 import { ForwardRefExoticComponent, RefAttributes, useCallback } from "react";
-import Link from "next/link";
+import { TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import { logout } from "@/lib/logout";
 import { toast } from "sonner";
 
 interface MobileItemProps {
-  href: string;
+  value: string;
   label: string;
   icon: ForwardRefExoticComponent<
     Omit<LucideProps, "forwardRef"> & RefAttributes<SVGSVGElement>
@@ -16,7 +16,7 @@ interface MobileItemProps {
   active?: boolean;
 }
 
-const MobileItem = ({ label, icon: Icon, href, active }: MobileItemProps) => {
+const MobileItem = ({ label, icon: Icon, value, active }: MobileItemProps) => {
   const handleLogout = useCallback(() => {
     const promise = logout("/sign-in");
     toast.promise(promise, {
@@ -42,11 +42,10 @@ const MobileItem = ({ label, icon: Icon, href, active }: MobileItemProps) => {
           <span className={cn("text-xs text-center")}>{label}</span>
         </button>
       ) : (
-        <Link
-          href={href}
+        <TabsTrigger
+          value={value}
           className={cn(
-            "w-full h-full flex flex-col items-center justify-center gap-1 text-muted-foreground/50 hover:text-primary z-[9999]",
-            { "text-primary font-medium": active }
+            "w-full h-full flex flex-col items-center justify-center gap-1 text-muted-foreground/50 hover:text-primary z-[9999] data-[state=active]:text-primary data-[state=active]:font-medium"
           )}
         >
           <Icon
@@ -54,7 +53,7 @@ const MobileItem = ({ label, icon: Icon, href, active }: MobileItemProps) => {
             strokeWidth={1.5}
           />
           <span className={cn("text-xs text-center")}>{label}</span>
-        </Link>
+        </TabsTrigger>
       )}
     </>
   );

@@ -12,7 +12,7 @@ const SignInWithGoogleBtn = () => {
       variant={"outline"}
       className="w-full max-w-[4`50px] py-5 cursor-pointer"
       onClick={() => signIn("google", {
-        redirectTo: '/dashboard/chats'
+        redirectTo: '/dashboard'
       })}
     >
       <FcGoogle className="size-[20px]" />

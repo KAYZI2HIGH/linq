@@ -11,25 +11,25 @@ const useRoutes = () => {
     () => [
       {
         label: "Chats",
-        href: "/dashboard/chats",
+        value: "chats",
         icon: MessageSquareText,
         active: pathname === "/dashboard/chats" || !!conversationId,
       },
       {
-        label: "friends",
-        href: "/dashboard/friends",
+        label: "Friends",
+        value: "friends",
         icon: Users,
         active: pathname === "/dashboard/friends",
       },
       {
-        label: "settings",
-        href: "/dashboard/settings",
+        label: "Settings",
+        value: "settings",
         icon: Settings,
         active: pathname === "/dashboard/settings",
       },
       {
         label: "Logout",
-        href: "#",
+        value: "logout",
         icon: LogOut,
       },
     ],

@@ -45,6 +45,8 @@ const LanguagePreference = ({
 
   const { mutate } = useMutation({
     mutationFn: UpdateSettings,
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ["processedMessages"] }),
   });
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -78,7 +80,7 @@ const LanguagePreference = ({
       <Form {...form}>
         <form className="flex flex-col gap-4">
           <div className="flex gap-2 items-center ">
-            <Globe className="h-5 w-5 text-blue-500" />
+            <Globe className="h-5 w-5" />
             <h2 className="text-lg font-semibold">Language Preference</h2>
           </div>
           <FormField

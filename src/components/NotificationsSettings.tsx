@@ -59,10 +59,10 @@ const NotificationSettings = ({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="mt-8 space-y-3"
+        className="mt-6 space-y-3"
       >
         <div className="flex gap-2 items-center mb-3">
-          <Bell className="h-5 w-5 text-blue-500" />
+          <Bell className="h-5 w-5" />
           <h2 className="text-lg font-semibold">Notifications</h2>
         </div>
         <FormField

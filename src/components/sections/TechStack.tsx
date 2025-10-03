@@ -53,7 +53,10 @@ const TechStack = () => {
                   damping: 15,
                 }}
               >
-                <tech.icon className="size-full text-white" />
+                {tech.icon && (() => {
+                  const Icon = tech.icon;
+                  return <Icon className="size-full text-white" />;
+                })()}
               </motion.div>
 
               <h3 className="tracking-wide font-medium md:text-[16px]">

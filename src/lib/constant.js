@@ -1,6 +1,5 @@
-import { IconBrandNextjs, IconBrandSupabase, IconBrandVercel, IconBrandVercelFilled } from "@tabler/icons-react";
-import { Bot, Globe, ImageUp, Lock, MessageSquare, Phone, RadioTower, Settings2, User, Users, Zap } from "lucide-react";
-import {RedisIcon, NextjsIcon, SupabaseIcon} from '@/components/svg'
+import { NextjsIcon, RedisIcon } from '@/components/svg';
+import { Bot, Globe, ImageUp, Lock, MessageSquare, Phone, RadioTower, Settings2, User, Users } from "lucide-react";
 
 export const items = [
   {
@@ -475,7 +474,6 @@ export const techStack = [
     title: 'Pusher'
   },
   {
-    icon: IconBrandSupabase,
     title: 'Supabase'
   },
   {
@@ -487,7 +485,6 @@ export const techStack = [
     title: 'Auth'
   },
   {
-    icon: IconBrandVercelFilled,
     title: 'Vercel'
   },
 ]

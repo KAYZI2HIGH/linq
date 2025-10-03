@@ -1,30 +1,27 @@
+// app/api/messages/get/[chatId]/route.ts
 import { NextResponse } from "next/server";
-import { redis } from "@/lib/redis";
 import supabase from "@/lib/supabaseClient";
+import { auth } from "@/auth";
+import { GetUserSettings } from "@/lib/actions";
+import { translateText } from "@/lib/translate";
 
-
-export async function GET(req: Request,
+export async function GET(
+  req: Request,
   { params }: { params: { chatId: string } }
 ) {
-  const {chatId} = await params
-  if (!params || !chatId) {
+  const { chatId } = await params;
+
+  if (!chatId) {
     return NextResponse.json({ error: "Chat ID is required" }, { status: 400 });
   }
+
   try {
-
-    const cachedMessages = await redis.lrange(`messages:${chatId}`, 0, -1);
-
-    if (cachedMessages.length > 0) {
-      return NextResponse.json(
-        { messages: cachedMessages, source: "redis" },
-        { status: 200 }
-      );
-    }
-
+    // Get messages from Supabase
     const { data: messages, error } = await supabase
       .from("messages")
       .select()
-      .eq("chat_id", chatId);
+      .eq("chat_id", chatId)
+      .order("created_at", { ascending: true });
 
     if (error) {
       console.error("Error fetching messages:", error);
@@ -34,15 +31,50 @@ export async function GET(req: Request,
       );
     }
 
-    if (messages.length > 0) {
-      await redis.rpush(
-        `messages:${chatId}`,
-        ...messages.map((msg) => JSON.stringify(msg))
+    // Get user settings for translation
+    const session = await auth();
+    const settings = await GetUserSettings(session?.user?.id || null);
+
+    let processedMessages = messages || [];
+
+    // Handle translation if auto-translate is enabled
+    if (
+      settings?.auto_translate &&
+      settings.default_language &&
+      messages &&
+      messages.length > 0
+    ) {
+      const foreignMessages = messages.filter(
+        (msg: any) => msg.isTranslated !== true
       );
+      const messagesToTranslate = foreignMessages.slice(-10);
+
+      const translatedMessages = await Promise.all(
+        messagesToTranslate.map(async (msg: any) => {
+          try {
+            return {
+              ...msg,
+              content: await translateText(
+                msg.content,
+                settings.default_language
+              ),
+              isTranslated: true,
+            };
+          } catch (error) {
+            console.error(`Translation failed for message ${msg.id}`);
+            return msg;
+          }
+        })
+      );
+
+      processedMessages = messages.map((msg: any) => {
+        const translatedMsg = translatedMessages.find((m) => m.id === msg.id);
+        return translatedMsg || msg;
+      });
     }
 
     return NextResponse.json(
-      { messages, source: "supabase" },
+      { messages: processedMessages },
       {
         status: 200,
         headers: {

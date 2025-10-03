@@ -1,42 +1,81 @@
-import { auth } from "@/auth";
+"use client";
+
 import React from "react";
 import ProfileAvatar from "../Avatar";
 import { EllipsisVertical, Phone, Video } from "lucide-react";
 import { Button } from "../ui/button";
-import supabase from "@/lib/supabaseClient";
-import { notFound } from "next/navigation";
 import BackButton from "../BackButton";
+import { useSession } from "next-auth/react";
+import { useQuery } from "@tanstack/react-query";
+import { getChat, getFriendInfo } from "@/lib/actions";
+import HeaderSkeleton from "../skeleton/chatSkeletons/HeaderSkeleton";
 
-const ChatsHeader = async ({ chatId }: { chatId: string }) => {
-  const session = await auth();
+const ChatsHeader = ({ chatId }: { chatId: string }) => {
+  const { data: session } = useSession();
 
-  const { data: chat, error } = await supabase
-    .from("chats")
-    .select()
-    .eq("id", chatId)
-    .single();
+  // Fetch chat data
+  const {
+    data: chat,
+    error: chatError,
+    isLoading: chatLoading,
+  } = useQuery({
+    queryKey: ["chat", chatId],
+    queryFn: () => getChat(chatId),
+    enabled: !!chatId,
+  });
 
-  if (error) throw new Error("Error fetching chat", error);
-
-  if (!chat) notFound();
-
+  // Fetch friend info
   const friendEmail =
-    chat.user1 === session?.user?.email ? chat.user2 : chat.user1;
+    chat && session?.user?.email
+      ? chat.user1 === session.user.email
+        ? chat.user2
+        : chat.user1
+      : null;
 
-  const { data: friendInfo, error: friendInfoError } = await supabase
-    .from("user_settings")
-    .select()
-    .eq("email", friendEmail)
-    .single();
+  const {
+    data: friendInfo,
+    error: friendInfoError,
+    isLoading: friendInfoLoading,
+  } = useQuery({
+    queryKey: ["friendInfo", friendEmail],
+    queryFn: () => getFriendInfo(friendEmail!),
+    enabled: !!friendEmail,
+  });
 
-  if (friendInfoError) throw new Error("Error fetching friend Information", friendInfoError);
+  if (chatLoading || friendInfoLoading) {
+    return (
+      <HeaderSkeleton />
+    );
+  }
 
-  if (!friendInfo) notFound();
+  if (chatError || friendInfoError) {
+    return (
+      <section className="p-4 flex justify-between items-center border-b">
+        <div className="flex gap-3 justify-center items-center">
+          <BackButton />
+          <div className="text-red-500 text-sm">
+            Error loading chat information
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (!chat || !friendInfo) {
+    return (
+      <section className="p-4 flex justify-between items-center border-b">
+        <div className="flex gap-3 justify-center items-center">
+          <BackButton />
+          <div className="text-gray-500 text-sm">Chat not found</div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="p-4 flex justify-between items-center border-b">
       <div className="flex gap-3 justify-center items-center">
-        <BackButton/>
+        <BackButton />
         <ProfileAvatar
           image={friendInfo?.image || ""}
           name={friendInfo?.display_name || ""}
@@ -45,7 +84,7 @@ const ChatsHeader = async ({ chatId }: { chatId: string }) => {
           <h1 className="text-[#111827] font-medium tracking-wide text-xs capitalize">
             {friendInfo?.display_name}
           </h1>
-          <p className="text-[#6B7280] text-[10px] capitalize ">online</p>
+          <p className="text-[#6B7280] text-[10px] capitalize">online</p>
         </div>
       </div>
       <div className="flex">

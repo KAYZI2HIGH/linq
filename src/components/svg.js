@@ -24,11 +24,11 @@ export const NextjsIcon = () => {
           gradientTransform="scale(.71111)"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#fff"></stop>
+          <stop stopColor="#fff"></stop>
           <stop
             offset="1"
-            stop-color="#fff"
-            stop-opacity="0"
+            stopColor="#fff"
+            stopOpacity="0"
           ></stop>
         </linearGradient>
         <linearGradient
@@ -40,11 +40,11 @@ export const NextjsIcon = () => {
           gradientTransform="scale(.71111)"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#fff"></stop>
+          <stop stopColor="#fff"></stop>
           <stop
             offset="1"
-            stop-color="#fff"
-            stop-opacity="0"
+            stopColor="#fff"
+            stopOpacity="0"
           ></stop>
         </linearGradient>
       </defs>
@@ -67,7 +67,7 @@ export const SupabaseIcon = () => {
         >
           <stop
             offset="0"
-            stop-color="#249361"
+            stopColor="#249361"
           ></stop>
           <stop
             offset="1"
@@ -86,7 +86,7 @@ export const SupabaseIcon = () => {
           <stop offset="0"></stop>
           <stop
             offset="1"
-            stop-opacity="0"
+            stopOpacity="0"
           ></stop>
         </linearGradient>
       </defs>
@@ -97,7 +97,7 @@ export const SupabaseIcon = () => {
       ></path>
       <path
         fill="url(#b)"
-        fill-opacity=".2"
+        fillOpacity=".2"
         d="M102.24 186.21c-3.267 4.117-9.904 1.862-9.977-3.397l-1.156-76.906h51.715c9.365 0 14.587 10.817 8.763 18.149z"
         transform="translate(-27.722 -60.338)"
       ></path>

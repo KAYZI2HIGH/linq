@@ -1,18 +1,27 @@
-'use client'
-import DashboardFloatingDock from "@/components/DashboardFloatingDock";
-import DashboardNavbar from "@/components/DashboardNavbar";
-import { usePathname } from "next/navigation";
+import DashboardCustomLayout from "@/components/custom-ui/DashboardCustomLayout";
+import EmptyState from "@/components/custom-ui/EmptyStates";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { cn } from "@/lib/utils";
 import React from "react";
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
-  const pathName = usePathname()
+const ChatsLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <section className="flex flex-col h-dvh">
-      <DashboardNavbar text={pathName.includes('settings') ? 'Settings' : 'Friends Management'} />
-      <section className="p-4 md:pr-8 flex flex-col gap-7 flex-1 grow overflow-y-scroll">{children}</section>
-      <DashboardFloatingDock/>
-    </section>
+    <DashboardCustomLayout
+      aside={
+        <div className="flex flex-col space-y-4 w-full h-full">
+          <div className="text-2xl font-bold flex items-center text-primary h-16 px-4 border-b">
+            Management
+          </div>
+          <ScrollArea className="grid gap-2 px-4 h-dvh pb-5">{children}</ScrollArea>
+        </div>
+      }
+      content={
+        <div className={cn("w-full h-screen md:block")}>
+          <EmptyState />
+        </div>
+      }
+    />
   );
 };
 
-export default Layout;
+export default ChatsLayout;

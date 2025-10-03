@@ -20,15 +20,14 @@ export const MessageContextProvider = ({
   children: React.ReactNode;
 }) => {
   const { data: session } = useSession();
-   
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [chatId, setChatId] = useState("");
 
   const translateMessage = async (message: Message): Promise<Message> => {
-    const settings = await GetUserSettings(session?.user?.id || null)
+    const settings = await GetUserSettings(session?.user?.id || null);
     if (!settings?.auto_translate || !settings.default_language) return message;
-    console.log('function ran')
+    console.log("function ran");
 
     try {
       const res = await fetch("/api/translate", {
@@ -54,27 +53,36 @@ export const MessageContextProvider = ({
   };
 
   useEffect(() => {
-     const handleIncomingMessage = async (data: Message) => {
-       const processedMessage = await translateMessage(data);
+    // Only subscribe if chatId is a non-empty string
+    if (!chatId || typeof chatId !== "string" || chatId.trim() === "") {
+      return;
+    }
 
-       setMessages((prev) => {
-         const exists = prev.some((msg) => msg.id === processedMessage.id);
-         return exists
-           ? prev.map((msg) =>
-               msg.id === processedMessage.id ? processedMessage : msg
-             )
-           : [...prev, processedMessage];
-       });
-     };
+    const handleIncomingMessage = async (data: Message) => {
+      const processedMessage = await translateMessage(data);
 
-    pusherClient.subscribe(chatId);
-    pusherClient.bind("incoming-messages", handleIncomingMessage);
-
-    return () => {
-      pusherClient.unsubscribe(chatId);
-      pusherClient.unbind("incoming-messages", handleIncomingMessage);
+      setMessages((prev) => {
+        const exists = prev.some((msg) => msg.id === processedMessage.id);
+        return exists
+          ? prev.map((msg) =>
+              msg.id === processedMessage.id ? processedMessage : msg
+            )
+          : [...prev, processedMessage];
+      });
     };
-  }, [chatId, messages]);
+
+    try {
+      pusherClient.subscribe(chatId);
+      pusherClient.bind("incoming-messages", handleIncomingMessage);
+
+      return () => {
+        pusherClient.unsubscribe(chatId);
+        pusherClient.unbind("incoming-messages", handleIncomingMessage);
+      };
+    } catch (error) {
+      console.error("Pusher subscription error:", error);
+    }
+  }, [chatId]);
 
   return (
     <MessageContext.Provider
